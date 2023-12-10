@@ -73,6 +73,7 @@ class _FullScreenView1State extends State<FullScreenView1>
                         ? loadingWidget
                         : podCtr.videoCtr!.value.isInitialized
                         ? PodCoreVideoPlayer(
+                      isNext: true,
                       tag: widget.tag,
                       videoPlayerCtr: podCtr.videoCtr!,
                       videoAspectRatio:

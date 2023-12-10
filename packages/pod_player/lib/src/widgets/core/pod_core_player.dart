@@ -4,9 +4,11 @@ class PodCoreVideoPlayer extends StatelessWidget {
   final VideoPlayerController videoPlayerCtr;
   final double videoAspectRatio;
   final String tag;
+  final bool isNext;
 
   const PodCoreVideoPlayer({
     required this.videoPlayerCtr,
+    required this.isNext,
     required this.videoAspectRatio, required this.tag, super.key,
   });
 
@@ -67,7 +69,7 @@ class PodCoreVideoPlayer extends StatelessWidget {
                   },
                 ),
               ),
-              _VideoOverlays(tag: tag),
+              _VideoOverlays(tag: tag, isNext: isNext),
               IgnorePointer(
                 child: GetBuilder<PodGetXVideoController>(
                   tag: tag,

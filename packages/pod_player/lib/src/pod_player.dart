@@ -260,6 +260,7 @@ class _PodVideoPlayerState extends State<PodVideoPlayer>
         builder: (podCtr) {
           if (podCtr.isFullScreen) return _thumbnailAndLoadingWidget();
           return PodCoreVideoPlayer(
+             isNext: false,
             videoPlayerCtr: podCtr.videoCtr!,
             videoAspectRatio: videoAspectRatio,
             tag: widget.controller.getTag,
@@ -268,6 +269,7 @@ class _PodVideoPlayerState extends State<PodVideoPlayer>
       );
     } else {
       return PodCoreVideoPlayer(
+        isNext: false,
         videoPlayerCtr: _podCtr.videoCtr!,
         videoAspectRatio: videoAspectRatio,
         tag: widget.controller.getTag,
