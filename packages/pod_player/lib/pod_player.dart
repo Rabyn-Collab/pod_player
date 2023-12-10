@@ -12,4 +12,5 @@ export 'src/models/pod_progress_bar_config.dart';
 export 'src/models/vimeo_models.dart';
 export 'src/pod_player.dart';
 export 'src/utils/enums.dart';
+export 'src/widgets/full_screen_view1.dart';
 export 'src/widgets/pod_progress_bar.dart';

@@ -16,9 +16,10 @@ part 'widgets/animated_play_pause_icon.dart';
 
 part 'widgets/core/overlays/mobile_bottomsheet.dart';
 
+
 part 'widgets/core/overlays/mobile_overlay.dart';
 
-
+part 'widgets/core/overlays/mobile_overlay_1.dart';
 
 part 'widgets/core/overlays/overlays.dart';
 
@@ -32,8 +33,8 @@ part 'widgets/core/video_gesture_detector.dart';
 
 part 'widgets/full_screen_view.dart';
 
-class PodVideoPlayer extends StatefulWidget {
 
+class PodVideoPlayer extends StatefulWidget {
   final PodPlayerController controller;
   final double frameAspectRatio;
   final double videoAspectRatio;
@@ -42,10 +43,9 @@ class PodVideoPlayer extends StatefulWidget {
   final bool matchFrameAspectRatioToVideo;
   final PodProgressBarConfig podProgressBarConfig;
   final PodPlayerLabels podPlayerLabels;
-  final int? overlay;
   final Widget Function(OverLayOptions options)? overlayBuilder;
   final Widget Function()? onVideoError;
-  final VoidCallback?  func;
+  final VoidCallback? func;
   final Widget? videoTitle;
   final Color? backgroundColor;
   final DecorationImage? videoThumbnail;
@@ -61,7 +61,6 @@ class PodVideoPlayer extends StatefulWidget {
   final WidgetBuilder? onLoading;
 
   PodVideoPlayer({
-
     required this.controller,
     super.key,
     this.frameAspectRatio = 16 / 9,
@@ -70,9 +69,7 @@ class PodVideoPlayer extends StatefulWidget {
     this.podProgressBarConfig = const PodProgressBarConfig(),
     this.podPlayerLabels = const PodPlayerLabels(),
     this.overlayBuilder,
-    this.overlay,
     this.videoTitle,
-    this.func,
     this.matchVideoAspectRatioToFrame = false,
     this.matchFrameAspectRatioToVideo = false,
     this.onVideoError,
@@ -80,6 +77,7 @@ class PodVideoPlayer extends StatefulWidget {
     this.videoThumbnail,
     this.onToggleFullScreen,
     this.onLoading,
+    this.func
   }) {
     addToUiController();
   }
@@ -95,11 +93,10 @@ class PodVideoPlayer extends StatefulWidget {
       ..alwaysShowProgressBar = alwaysShowProgressBar
       ..podProgressBarConfig = podProgressBarConfig
       ..overlayBuilder = overlayBuilder
-      ..overlay= overlay
+      ..func = func
       ..videoTitle = videoTitle
       ..onToggleFullScreen = onToggleFullScreen
       ..onLoading = onLoading
-      ..func = func
       ..videoThumbnail = videoThumbnail;
   }
 
@@ -134,31 +131,31 @@ class _PodVideoPlayerState extends State<PodVideoPlayer>
     }
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //
-  //   ///Checking if the video was playing when this widget is disposed
-  //   if (_podCtr.isvideoPlaying) {
-  //     _podCtr.wasVideoPlayingOnUiDispose = true;
-  //   } else {
-  //     _podCtr.wasVideoPlayingOnUiDispose = false;
-  //   }
-  //   _podCtr
-  //     ..isVideoUiBinded = false
-  //     ..podVideoStateChanger(PodVideoState.paused, updateUi: false);
-  //   if (kIsWeb) {
-  //     _podCtr.keyboardFocusWeb?.removeListener(_podCtr.keyboadListner);
-  //   }
-  //   // _podCtr.keyboardFocus?.unfocus();
-  //   // _podCtr.keyboardFocusOnFullScreen?.unfocus();
-  //   _podCtr.hoverOverlayTimer?.cancel();
-  //   _podCtr.showOverlayTimer?.cancel();
-  //   _podCtr.showOverlayTimer1?.cancel();
-  //   _podCtr.leftDoubleTapTimer?.cancel();
-  //   _podCtr.rightDoubleTapTimer?.cancel();
-  //   podLog('local PodVideoPlayer disposed');
-  // }
+  @override
+  void dispose() {
+    super.dispose();
+
+    ///Checking if the video was playing when this widget is disposed
+    if (_podCtr.isvideoPlaying) {
+      _podCtr.wasVideoPlayingOnUiDispose = true;
+    } else {
+      _podCtr.wasVideoPlayingOnUiDispose = false;
+    }
+    _podCtr
+      ..isVideoUiBinded = false
+      ..podVideoStateChanger(PodVideoState.paused, updateUi: false);
+    if (kIsWeb) {
+      _podCtr.keyboardFocusWeb?.removeListener(_podCtr.keyboadListner);
+    }
+    // _podCtr.keyboardFocus?.unfocus();
+    // _podCtr.keyboardFocusOnFullScreen?.unfocus();
+    _podCtr.hoverOverlayTimer?.cancel();
+    _podCtr.showOverlayTimer?.cancel();
+    _podCtr.showOverlayTimer1?.cancel();
+    _podCtr.leftDoubleTapTimer?.cancel();
+    _podCtr.rightDoubleTapTimer?.cancel();
+    podLog('local PodVideoPlayer disposed');
+  }
 
   ///
   double _frameAspectRatio = 16 / 9;
@@ -262,7 +259,7 @@ class _PodVideoPlayerState extends State<PodVideoPlayer>
         id: 'full-screen',
         builder: (podCtr) {
           if (podCtr.isFullScreen) return _thumbnailAndLoadingWidget();
-          return _PodCoreVideoPlayer(
+          return PodCoreVideoPlayer(
             videoPlayerCtr: podCtr.videoCtr!,
             videoAspectRatio: videoAspectRatio,
             tag: widget.controller.getTag,
@@ -270,7 +267,7 @@ class _PodVideoPlayerState extends State<PodVideoPlayer>
         },
       );
     } else {
-      return _PodCoreVideoPlayer(
+      return PodCoreVideoPlayer(
         videoPlayerCtr: _podCtr.videoCtr!,
         videoAspectRatio: videoAspectRatio,
         tag: widget.controller.getTag,

@@ -4,10 +4,9 @@ class _PodUiController extends _PodBaseController {
   bool alwaysShowProgressBar = true;
   PodProgressBarConfig podProgressBarConfig = const PodProgressBarConfig();
   Widget Function(OverLayOptions options)? overlayBuilder;
-  int? overlay;
   Widget? videoTitle;
-  DecorationImage? videoThumbnail;
   VoidCallback? func;
+  DecorationImage? videoThumbnail;
 
   /// Callback when fullscreen mode changes
   Future<void> Function(bool isFullScreen)? onToggleFullScreen;

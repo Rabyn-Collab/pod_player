@@ -1,14 +1,13 @@
 part of 'package:pod_player/src/pod_player.dart';
 
-class _PodCoreVideoPlayer extends StatelessWidget {
+class PodCoreVideoPlayer extends StatelessWidget {
   final VideoPlayerController videoPlayerCtr;
   final double videoAspectRatio;
   final String tag;
 
-  const _PodCoreVideoPlayer({
+  const PodCoreVideoPlayer({
     required this.videoPlayerCtr,
-    required this.videoAspectRatio,
-    required this.tag,
+    required this.videoAspectRatio, required this.tag, super.key,
   });
 
   @override

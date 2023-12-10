@@ -20,7 +20,6 @@ class _PodVideoController extends _PodUiController {
     '2x',
   ];
 
-
   ///
 
   ///*seek video
@@ -184,8 +183,6 @@ class _PodVideoController extends _PodUiController {
         update(['update-all']);
       });
     }
-
-
   }
 
   Future<void> disableFullScreen(

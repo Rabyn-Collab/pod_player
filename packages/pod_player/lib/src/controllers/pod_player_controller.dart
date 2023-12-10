@@ -163,9 +163,9 @@ class PodPlayerController {
   ///Dispose pod video player controller
   void dispose() {
     _isCtrInitialised = false;
-  //  _ctr.videoCtr?.removeListener(_ctr.videoListner);
+    _ctr.videoCtr?.removeListener(_ctr.videoListner);
     _ctr.videoCtr?.dispose();
-  //  _ctr.removeListenerId('podVideoState', _ctr.podStateListner);
+    _ctr.removeListenerId('podVideoState', _ctr.podStateListner);
     if (podPlayerConfig.wakelockEnabled) WakelockPlus.disable();
     Get.delete<PodGetXVideoController>(
       force: true,

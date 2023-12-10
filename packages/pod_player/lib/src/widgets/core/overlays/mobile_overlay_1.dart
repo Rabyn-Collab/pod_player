@@ -1,10 +1,12 @@
 part of 'package:pod_player/src/pod_player.dart';
 
-class _MobileOverlay extends StatelessWidget {
+class _MobileOverlay1 extends StatelessWidget {
   final String tag;
+  final VoidCallback func;
 
-  const _MobileOverlay({
+  const _MobileOverlay1({
     required this.tag,
+    required this.func
   });
 
   @override
@@ -80,7 +82,7 @@ class _MobileOverlay extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.bottomLeft,
-          child: _MobileOverlayBottomControlles(tag: tag),
+          child: _MobileOverlayBottomControlles1(tag: tag, func: func),
         ),
       ],
     );

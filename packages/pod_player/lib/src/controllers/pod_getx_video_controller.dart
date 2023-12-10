@@ -20,13 +20,13 @@ part 'pod_video_quality_controller.dart';
 
 class PodGetXVideoController extends _PodGesturesController {
   ///main videoplayer controller
-   VideoPlayerController? get videoCtr => _videoCtr;
+  VideoPlayerController? get videoCtr => _videoCtr;
 
   ///podVideoPlayer state notifier
   PodVideoState get podVideoState => _podVideoState;
 
   ///vimeo or general --video player type
- PodVideoPlayerType get videoPlayerType => _videoPlayerType;
+  PodVideoPlayerType get videoPlayerType => _videoPlayerType;
 
   String get currentPaybackSpeed => _currentPaybackSpeed;
 
@@ -240,29 +240,17 @@ class PodGetXVideoController extends _PodGesturesController {
     }
   }
 
-   void toggleFullScreenOnWeb(BuildContext context, String tag) {
-     if (isFullScreen) {
-       uni_html.document.exitFullscreen();
-       if (!isWebPopupOverlayOpen) {
-         disableFullScreen(context, tag);
-       }
-     } else {
-       uni_html.document.documentElement?.requestFullscreen();
-       enableFullScreen(tag);
-     }
-   }
-
-  // void toggleFullScreenOnWeb(BuildContext context, String tag) {
-  //   if (isFullScreen) {
-  //     uni_html.document.exitFullscreen();
-  //     if (!isWebPopupOverlayOpen) {
-  //       disableFullScreen(context, tag);
-  //     }
-  //   } else {
-  //     uni_html.document.documentElement?.requestFullscreen();
-  //     enableFullScreen(tag);
-  //   }
-  // }
+  void toggleFullScreenOnWeb(BuildContext context, String tag) {
+    if (isFullScreen) {
+      uni_html.document.exitFullscreen();
+      if (!isWebPopupOverlayOpen) {
+        disableFullScreen(context, tag);
+      }
+    } else {
+      uni_html.document.documentElement?.requestFullscreen();
+      enableFullScreen(tag);
+    }
+  }
 
   ///this func will listne to update id `_podVideoState`
   void podStateListner() {
@@ -276,9 +264,9 @@ class PodGetXVideoController extends _PodGesturesController {
         if (podPlayerConfig.wakelockEnabled) WakelockPlus.disable();
         playVideo(false);
         break;
-        break;
       case PodVideoState.loading:
         isShowOverlay(true);
+        break;
       case PodVideoState.error:
         if (podPlayerConfig.wakelockEnabled) WakelockPlus.disable();
         playVideo(false);

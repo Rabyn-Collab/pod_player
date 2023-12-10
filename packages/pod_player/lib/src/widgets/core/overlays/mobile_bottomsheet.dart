@@ -178,15 +178,11 @@ class _VideoPlaybackSelectorMob extends StatelessWidget {
   }
 }
 
-
 class _MobileOverlayBottomControlles extends StatelessWidget {
   final String tag;
-  final VoidCallback? func;
 
   const _MobileOverlayBottomControlles({
     required this.tag,
-    required this.func
-
   });
 
   @override
@@ -226,24 +222,117 @@ class _MobileOverlayBottomControlles extends StatelessWidget {
                 },
               ),
               const Spacer(),
-             MaterialIconButton(
+              MaterialIconButton(
+                toolTipMesg: podCtr.isFullScreen
+                    ? podCtr.podPlayerLabels.exitFullScreen ??
+                        'Exit full screen${kIsWeb ? ' (f)' : ''}'
+                    : podCtr.podPlayerLabels.fullscreen ??
+                        'Fullscreen${kIsWeb ? ' (f)' : ''}',
+                color: itemColor,
+                onPressed: () {
+                  if (podCtr.isOverlayVisible) {
+                    if (podCtr.isFullScreen) {
+                      podCtr.disableFullScreen(context, tag);
+                    } else {
+                      podCtr.enableFullScreen(tag);
+                    }
+                  } else {
+                    podCtr.toggleVideoOverlay();
+                  }
+                },
+                child: Icon(
+                  podCtr.isFullScreen
+                      ? Icons.fullscreen_exit
+                      : Icons.fullscreen,
+                ),
+              ),
+            ],
+          ),
+          GetBuilder<PodGetXVideoController>(
+            tag: tag,
+            id: 'overlay',
+            builder: (podCtr) {
+              if (podCtr.isFullScreen) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 20),
+                  child: Visibility(
+                    visible: podCtr.isOverlayVisible,
+                    child: PodProgressBar(
+                      tag: tag,
+                      alignment: Alignment.topCenter,
+                      podProgressBarConfig: podCtr.podProgressBarConfig,
+                    ),
+                  ),
+                );
+              }
+              return PodProgressBar(
+                tag: tag,
+                alignment: Alignment.bottomCenter,
+                podProgressBarConfig: podCtr.podProgressBarConfig,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class _MobileOverlayBottomControlles1 extends StatelessWidget {
+  final String tag;
+  final VoidCallback func;
+
+  const _MobileOverlayBottomControlles1({
+    required this.tag,
+    required this.func
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const durationTextStyle = TextStyle(color: Colors.white70);
+    const itemColor = Colors.white;
+
+    return GetBuilder<PodGetXVideoController>(
+      tag: tag,
+      id: 'full-screen',
+      builder: (podCtr) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const SizedBox(width: 12),
+              GetBuilder<PodGetXVideoController>(
+                tag: tag,
+                id: 'video-progress',
+                builder: (podCtr) {
+                  return Row(
+                    children: [
+                      Text(
+                        podCtr.calculateVideoDuration(podCtr.videoPosition),
+                        style: const TextStyle(color: itemColor),
+                      ),
+                      const Text(
+                        ' / ',
+                        style: durationTextStyle,
+                      ),
+                      Text(
+                        podCtr.calculateVideoDuration(podCtr.videoDuration),
+                        style: durationTextStyle,
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const Spacer(),
+              MaterialIconButton(
                 toolTipMesg: podCtr.isFullScreen
                     ? podCtr.podPlayerLabels.exitFullScreen ??
                     'Exit full screen${kIsWeb ? ' (f)' : ''}'
                     : podCtr.podPlayerLabels.fullscreen ??
                     'Fullscreen${kIsWeb ? ' (f)' : ''}',
                 color: itemColor,
-                onPressed: () {
-                  if(func != null){
-                     func!();
-                  }else {
-                    if (podCtr.isFullScreen) {
-                      podCtr.disableFullScreen(context, tag);
-                    } else {
-                      podCtr.enableFullScreen(tag);
-                    }
-                  }
-                },
+                onPressed: func,
                 child: Icon(
                   podCtr.isFullScreen
                       ? Icons.fullscreen_exit
